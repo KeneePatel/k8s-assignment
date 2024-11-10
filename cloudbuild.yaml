@@ -1,4 +1,13 @@
 steps:
+  # Set up kubectl to connect to GKE
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    args: [
+      'container', 'clusters', 'get-credentials', 'k8s-assignment',  # Replace with your cluster name
+      '--zone', 'us-central1',
+      '--project', '$PROJECT_ID'
+    ]
+
   # Build container1-service
   - name: 'gcr.io/cloud-builders/docker'
     args: [
