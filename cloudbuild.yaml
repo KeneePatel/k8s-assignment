@@ -27,13 +27,13 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/calc-service:latest']
 
-  # Deploy to GKE
-  - name: 'gcr.io/cloud-builders/gke-deploy'
+  # Deploy to GKE using kubectl
+  - name: 'gcr.io/cloud-builders/kubectl'
     args:
-    - run
-    - --filename=k8s
-    - --location=us-central1
-    - --cluster=k8s-assignment
+      - apply
+      - -f
+      - k8s/  # Ensure the 'k8s' directory contains deployment and service YAML files
+    timeout: "600s"  # Set a 10-minute timeout for deployment
 
 images:
   - 'us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/file-service:$COMMIT_SHA'
@@ -43,3 +43,4 @@ images:
 
 options:
   logging: CLOUD_LOGGING_ONLY
+
