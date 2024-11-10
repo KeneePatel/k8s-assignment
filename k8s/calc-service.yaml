@@ -15,22 +15,22 @@ spec:
         app: calc-service
     spec:
       containers:
-      - name: calc-service
-        image: us-central1-docker.pkg.dev/k8s-assignment-csci5409/k8s-assignment-repo/calc-service:latest
-        ports:
-        - containerPort: 3001
-        env:
-        - name: STORAGE_DIR
-          value: "/Kenee_Ashok_PV_dir"
-        resources:
-          requests:
-            cpu: "50m"
-            memory: "64Mi"
-          limits:
-            cpu: "100m"
-            memory: "128Mi"
-        readinessProbe:
-          httpGet:
+        - name: calc-service
+          image: us-central1-docker.pkg.dev/k8s-assignment-csci5409/k8s-assignment-repo/calc-service:latest
+          ports:
+            - containerPort: 3001
+          env:
+            - name: STORAGE_DIR
+              value: "/Kenee_Ashok_PV_dir"
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+            limits:
+              cpu: "100m"
+              memory: "128Mi"
+          readinessProbe:
+            httpGet:
               port: 3001
               path: /health
             initialDelaySeconds: 300
@@ -41,13 +41,13 @@ spec:
               path: /health
             initialDelaySeconds: 300
             periodSeconds: 10
-        volumeMounts:
-        - name: data-volume
-          mountPath: /Kenee_Ashok_PV_dir
+          volumeMounts:
+            - name: data-volume
+              mountPath: /Kenee_Ashok_PV_dir
       volumes:
-      - name: data-volume
-        persistentVolumeClaim:
-          claimName: k8s-assignment-pvc
+        - name: data-volume
+          persistentVolumeClaim:
+            claimName: k8s-assignment-pvc
 ---
 apiVersion: v1
 kind: Service
@@ -55,8 +55,7 @@ metadata:
   name: calc-service
 spec:
   ports:
-  - port: 3001
-    targetPort: 3001
+    - port: 3001
+      targetPort: 3001
   selector:
     app: calc-service
-

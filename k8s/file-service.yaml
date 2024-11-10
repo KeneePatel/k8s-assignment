@@ -15,24 +15,24 @@ spec:
         app: file-service
     spec:
       containers:
-      - name: file-service
-        image: us-central1-docker.pkg.dev/k8s-assignment-csci5409/k8s-assignment-repo/file-service:latest
-        ports:
-        - containerPort: 3000
-        env:
-        - name: CONTAINER2_URL
-          value: "http://calc-service:3001"
-        - name: STORAGE_DIR
-          value: "/Kenee_Ashok_PV_dir"
-        resources:
-          requests:
-            cpu: "50m"
-            memory: "64Mi"
-          limits:
-            cpu: "100m"
-            memory: "128Mi"
-        readinessProbe:
-          httpGet:
+        - name: file-service
+          image: us-central1-docker.pkg.dev/k8s-assignment-csci5409/k8s-assignment-repo/file-service:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: CONTAINER2_URL
+              value: "http://calc-service:3001"
+            - name: STORAGE_DIR
+              value: "/Kenee_Ashok_PV_dir"
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+            limits:
+              cpu: "100m"
+              memory: "128Mi"
+          readinessProbe:
+            httpGet:
               port: 3001
               path: /health
             initialDelaySeconds: 300
@@ -43,13 +43,13 @@ spec:
               path: /health
             initialDelaySeconds: 300
             periodSeconds: 10
-        volumeMounts:
-        - name: data-volume
-          mountPath: /Kenee_Ashok_PV_dir
+          volumeMounts:
+            - name: data-volume
+              mountPath: /Kenee_Ashok_PV_dir
       volumes:
-      - name: data-volume
-        persistentVolumeClaim:
-          claimName: k8s-assignment-pvc
+        - name: data-volume
+          persistentVolumeClaim:
+            claimName: k8s-assignment-pvc
 ---
 apiVersion: v1
 kind: Service
@@ -58,8 +58,7 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-  - port: 80
-    targetPort: 3000
+    - port: 80
+      targetPort: 3000
   selector:
     app: file-service
-
