@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: file-service
-        image: us-central1-docker.pkg.dev/${PROJECT_ID}/k8s-assignment-repo/file-service:latest
+        image: us-central1-docker.pkg.dev/k8s-assignment-csci5409/k8s-assignment-repo/file-service:latest
         ports:
         - containerPort: 3000
         env:
