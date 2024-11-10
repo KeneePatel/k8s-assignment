@@ -22,13 +22,6 @@ spec:
           env:
             - name: STORAGE_DIR
               value: "/Kenee_Ashok_PV_dir"
-          resources:
-            requests:
-              cpu: "50m"
-              memory: "64Mi"
-            limits:
-              cpu: "100m"
-              memory: "128Mi"
           readinessProbe:
             httpGet:
               port: 3001

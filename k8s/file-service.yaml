@@ -24,13 +24,6 @@ spec:
               value: "http://calc-service:3001"
             - name: STORAGE_DIR
               value: "/Kenee_Ashok_PV_dir"
-          resources:
-            requests:
-              cpu: "50m"
-              memory: "64Mi"
-            limits:
-              cpu: "100m"
-              memory: "128Mi"
           readinessProbe:
             httpGet:
               port: 3001
@@ -58,7 +51,7 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-    - port: 80
+    - port: 3000
       targetPort: 3000
   selector:
     app: file-service
