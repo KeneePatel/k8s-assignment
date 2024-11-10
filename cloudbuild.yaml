@@ -10,10 +10,10 @@ steps:
           --project $PROJECT_ID
         kubectl config current-context  # Display current context for verification
 
+  # Build container1-service
   - name: 'gcr.io/cloud-builders/docker'
     args: [
       'build',
-      '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/file-service:$COMMIT_SHA',
       '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/file-service:latest',
       './container1-service'
     ]
@@ -22,18 +22,13 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: [
       'build',
-      '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/calc-service:$COMMIT_SHA',
       '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/calc-service:latest',
       './container2-service'
     ]
 
   # Push both images
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/file-service:$COMMIT_SHA']
-  - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/file-service:latest']
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/calc-service:$COMMIT_SHA']
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/calc-service:latest']
 
@@ -49,9 +44,7 @@ steps:
     timeout: "600s"
 
 images:
-  - 'us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/file-service:$COMMIT_SHA'
   - 'us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/file-service:latest'
-  - 'us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/calc-service:$COMMIT_SHA'
   - 'us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/calc-service:latest'
 
 options:
