@@ -27,6 +27,11 @@ const validateCSV = (data) => {
     return header.includes('product') && header.includes('amount');
 };
 
+// Health check
+app.get('/health', (req, res) => {
+  res.status(200).send('Ok');
+});
+
 // Store file endpoint
 app.post('/store-file', async (req, res, next) => {
     try {

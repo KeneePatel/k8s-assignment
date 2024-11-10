@@ -29,6 +29,18 @@ spec:
           limits:
             cpu: "100m"
             memory: "128Mi"
+        readinessProbe:
+          httpGet:
+              port: 3001
+              path: /health
+            initialDelaySeconds: 300
+            periodSeconds: 30
+          livenessProbe:
+            httpGet:
+              port: 3001
+              path: /health
+            initialDelaySeconds: 300
+            periodSeconds: 10
         volumeMounts:
         - name: data-volume
           mountPath: /Kenee_Ashok_PV_dir

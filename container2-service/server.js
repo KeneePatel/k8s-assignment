@@ -15,6 +15,11 @@ app.use(bodyParser.json());
 // Storage directory - will be replaced with PV path later
 const STORAGE_DIR = process.env.STORAGE_DIR || '/tmp';
 
+// Health check
+app.get('/health', (req, res) => {
+  res.status(200).send('Ok');
+});
+
 // Calculate total endpoint
 app.post('/calculate-total', async (req, res) => {
     const { file, product } = req.body;
