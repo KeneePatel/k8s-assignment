@@ -22,18 +22,6 @@ spec:
           env:
             - name: STORAGE_DIR
               value: "/Kenee_Ashok_PV_dir"
-          readinessProbe:
-            httpGet:
-              port: 3001
-              path: /health
-            initialDelaySeconds: 300
-            periodSeconds: 30
-          livenessProbe:
-            httpGet:
-              port: 3001
-              path: /health
-            initialDelaySeconds: 300
-            periodSeconds: 10
           volumeMounts:
             - name: data-volume
               mountPath: /Kenee_Ashok_PV_dir
