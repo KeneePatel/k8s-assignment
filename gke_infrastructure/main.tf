@@ -22,10 +22,10 @@ resource "google_container_node_pool" "primary_nodes" {
   name       = "k8s-assignment-node-pool"
   location   = var.region
   cluster    = google_container_cluster.primary.name
-  node_count = 3
+  node_count = 1
 
   node_config {
-    machine_type = "e2-standard-2"
+    machine_type = "e2-medium"
     disk_type    = "pd-standard"
     disk_size_gb = 10
 
@@ -34,11 +34,6 @@ resource "google_container_node_pool" "primary_nodes" {
     oauth_scopes = [
       "https://www.googleapis.com/auth/cloud-platform"
     ]
-  }
-
-  autoscaling {
-    min_node_count = 1
-    max_node_count = 5
   }
 }
 
