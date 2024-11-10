@@ -2,14 +2,9 @@ steps:
   # Set up kubectl to connect to GKE
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'bash'
-    env:
-      - 'KUBECONFIG=/workspace/.kube/config'
-      - 'CLOUDSDK_COMPUTE_REGION=us-central1'
-      - 'CLOUDSDK_CONTAINER_CLUSTER=k8s-assignment'
     args:
       - '-c'
       - |
-        mkdir -p /workspace/.kube
         gcloud container clusters get-credentials k8s-assignment \
           --region us-central1 \
           --project $PROJECT_ID
@@ -44,6 +39,9 @@ steps:
 
   # Deploy to GKE using kubectl
   - name: 'gcr.io/cloud-builders/kubectl'
+    env:
+      - 'CLOUDSDK_COMPUTE_REGION=us-central1'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=k8s-assignment'
     args:
       - apply
       - -f
