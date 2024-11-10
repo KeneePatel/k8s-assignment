@@ -10,8 +10,7 @@ steps:
       - |
         mkdir -p /workspace/.kube
         gcloud container clusters get-credentials k8s-assignment \
-          --zone us-central1 \
-          --project $PROJECT_ID
+          --region=us-central1
         kubectl config current-context  # Display current context for verification
 
   # Build container1-service
