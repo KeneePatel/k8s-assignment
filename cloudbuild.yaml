@@ -1,5 +1,5 @@
 steps:
-  # Set up environment variables for the GKE region and cluster name
+  # Set up kubectl to connect to GKE
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'bash'
     env:
@@ -10,10 +10,10 @@ steps:
       - '-c'
       - |
         mkdir -p /workspace/.kube
-        gcloud container clusters get-credentials $CLOUDSDK_CONTAINER_CLUSTER \
-          --region $CLOUDSDK_COMPUTE_REGION \
+        gcloud container clusters get-credentials k8s-assignment \
+          --region us-central1 \
           --project $PROJECT_ID
-        kubectl config current-context  # Display current context for verification  # Build container1-service
+        kubectl config current-context  # Display current context for verification
 
   - name: 'gcr.io/cloud-builders/docker'
     args: [
