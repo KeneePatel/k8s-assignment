@@ -5,6 +5,11 @@ metadata:
   labels:
     app: calc-service
 spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
   replicas: 1
   selector:
     matchLabels:

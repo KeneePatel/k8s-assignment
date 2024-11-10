@@ -57,7 +57,7 @@ steps:
     args:
       [
         "push",
-        "us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/file-service:$COMMIT_SHA",
+        "us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/calc-service:$COMMIT_SHA",
       ]
 
   # Deploy to GKE using kubectl
