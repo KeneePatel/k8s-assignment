@@ -1,6 +1,6 @@
 steps:
 steps:
-  # Set KUBECONFIG to ensure `kubectl` uses the correct configuration file
+# Set KUBECONFIG to ensure `kubectl` uses the correct configuration file
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'bash'
     env:
@@ -10,8 +10,9 @@ steps:
       - |
         mkdir -p /workspace/.kube
         gcloud container clusters get-credentials k8s-assignment \
-          --region=us-central1
-        kubectl config current-context  # Display current context for verification
+          --region us-central1 \
+          --project $PROJECT_ID
+        kubectl config current-context
 
   # Build container1-service
   - name: 'gcr.io/cloud-builders/docker'
