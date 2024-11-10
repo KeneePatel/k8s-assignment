@@ -4,8 +4,8 @@ steps:
     entrypoint: 'bash'
     env:
       - 'KUBECONFIG=/workspace/.kube/config'
-      - 'CLOUDSDK_COMPUTE_REGION=us-central1'  # Replace with your actual region
-      - 'CLOUDSDK_CONTAINER_CLUSTER=k8s-assignment'  # Replace with your actual cluster name
+      - 'CLOUDSDK_COMPUTE_REGION=us-central1'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=k8s-assignment'
     args:
       - '-c'
       - |
