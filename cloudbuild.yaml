@@ -41,3 +41,5 @@ images:
   - '${REGION}-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/calc-service:$COMMIT_SHA'
   - '${REGION}-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/calc-service:latest'
 
+options:
+  logging: CLOUD_LOGGING_ONLY
