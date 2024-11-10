@@ -1,9 +1,9 @@
 steps:
   # Set up kubectl to connect to GKE
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: 'bash'
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    entrypoint: "bash"
     args:
-      - '-c'
+      - "-c"
       - |
         gcloud container clusters get-credentials k8s-assignment \
           --region us-central1 \
@@ -11,32 +11,48 @@ steps:
         kubectl config current-context  # Display current context for verification
 
   # Build container1-service
-  - name: 'gcr.io/cloud-builders/docker'
-    args: [
-      'build',
-      '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/file-service:latest',
-      './container1-service'
-    ]
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "build",
+        "-t",
+        "us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/file-service:latest",
+        "-t",
+        "us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/file-service:$COMMIT_SHA",
+        "./container1-service",
+      ]
 
   # Build container2-service
-  - name: 'gcr.io/cloud-builders/docker'
-    args: [
-      'build',
-      '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/calc-service:latest',
-      './container2-service'
-    ]
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "build",
+        "-t",
+        "us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/calc-service:latest",
+        "-t",
+        "us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/calc-service:$COMMIT_SHA",
+        "./container2-service",
+      ]
 
   # Push both images
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/file-service:latest']
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/calc-service:latest']
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "push",
+        "us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/file-service:latest",
+      ]
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "push",
+        "us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/calc-service:latest",
+      ]
 
   # Deploy to GKE using kubectl
-  - name: 'gcr.io/cloud-builders/kubectl'
+  - name: "gcr.io/cloud-builders/kubectl"
     env:
-      - 'CLOUDSDK_COMPUTE_REGION=us-central1'
-      - 'CLOUDSDK_CONTAINER_CLUSTER=k8s-assignment'
+      - "CLOUDSDK_COMPUTE_REGION=us-central1"
+      - "CLOUDSDK_CONTAINER_CLUSTER=k8s-assignment"
     args:
       - apply
       - -f
@@ -44,9 +60,8 @@ steps:
     timeout: "600s"
 
 images:
-  - 'us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/file-service:latest'
-  - 'us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/calc-service:latest'
+  - "us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/file-service:latest"
+  - "us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/calc-service:latest"
 
 options:
   logging: CLOUD_LOGGING_ONLY
-
