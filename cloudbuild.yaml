@@ -3,8 +3,8 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: [
       'build',
-      '-t', '${REGION}-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/file-service:$COMMIT_SHA',
-      '-t', '${REGION}-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/file-service:latest',
+      '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/file-service:$COMMIT_SHA',
+      '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/file-service:latest',
       './container1-service'
     ]
 
@@ -12,34 +12,34 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: [
       'build',
-      '-t', '${REGION}-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/calc-service:$COMMIT_SHA',
-      '-t', '${REGION}-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/calc-service:latest',
+      '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/calc-service:$COMMIT_SHA',
+      '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/calc-service:latest',
       './container2-service'
     ]
 
   # Push both images
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', '${REGION}-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/file-service:$COMMIT_SHA']
+    args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/file-service:$COMMIT_SHA']
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', '${REGION}-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/file-service:latest']
+    args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/file-service:latest']
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', '${REGION}-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/calc-service:$COMMIT_SHA']
+    args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/calc-service:$COMMIT_SHA']
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', '${REGION}-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/calc-service:latest']
+    args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/calc-service:latest']
 
   # Deploy to GKE
   - name: 'gcr.io/cloud-builders/gke-deploy'
     args:
     - run
     - --filename=k8s
-    - --location=${REGION}
+    - --location=us-central1
     - --cluster=k8s-assignment
 
 images:
-  - '${REGION}-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/file-service:$COMMIT_SHA'
-  - '${REGION}-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/file-service:latest'
-  - '${REGION}-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/calc-service:$COMMIT_SHA'
-  - '${REGION}-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/calc-service:latest'
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/file-service:$COMMIT_SHA'
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/file-service:latest'
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/calc-service:$COMMIT_SHA'
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/k8s-assignment-repo/calc-service:latest'
 
 options:
   logging: CLOUD_LOGGING_ONLY
