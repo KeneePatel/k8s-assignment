@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  container1:
+    build:
+      context: ./container1-service
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - CONTAINER2_URL=http://container2:3001
+      - STORAGE_DIR=/data
+    volumes:
+      - shared_data:/data
+    depends_on:
+      - container2
+
+  container2:
+    build:
+      context: ./container2-service
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - STORAGE_DIR=/data
+    volumes:
+      - shared_data:/data
+
+volumes:
+  shared_data:
+

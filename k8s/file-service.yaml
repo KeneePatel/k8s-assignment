@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: file-service
+  labels:
+    app: file-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: file-service
+  template:
+    metadata:
+      labels:
+        app: file-service
+    spec:
+      containers:
+      - name: file-service
+        image: ${REGION}-docker.pkg.dev/${PROJECT_ID}/k8s-assignment-repo/file-service:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: CONTAINER2_URL
+          value: "http://calc-service:3001"
+        - name: STORAGE_DIR
+          value: "/Kenee_Ashok_PV_dir"
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "200m"
+            memory: "256Mi"
+        volumeMounts:
+        - name: data-volume
+          mountPath: /Kenee_Ashok_PV_dir
+      volumes:
+      - name: data-volume
+        persistentVolumeClaim:
+          claimName: k8s-assignment-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: file-service
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 3000
+    targetPort: 3000
+  selector:
+    app: file-service
+

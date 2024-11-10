@@ -1,0 +1,25 @@
+stages:
+  - build
+  - deploy
+
+build_images:
+  image: docker
+  stage: build
+  services:
+    - docker:dind
+  script:
+    - docker build -t gcr.io/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/frontend:$CI_COMMIT_SHA frontend/
+    - docker build -t gcr.io/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/backend:$CI_COMMIT_SHA backend/
+    - docker push gcr.io/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/frontend:$CI_COMMIT_SHA
+    - docker push gcr.io/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/backend:$CI_COMMIT_SHA
+  only:
+    - branches
+
+update_gke:
+  stage: deploy
+  script:
+    - kubectl set image deployment/frontend-deployment frontend=gcr.io/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/frontend:$CI_COMMIT_SHA
+    - kubectl set image deployment/backend-deployment backend=gcr.io/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/backend:$CI_COMMIT_SHA
+  only:
+    - branches
+
