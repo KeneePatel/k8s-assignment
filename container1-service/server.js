@@ -57,7 +57,7 @@ app.post("/store-file", async (req, res, next) => {
     if (!validateCSV(data)) {
       return res.status(400).json({
         file,
-        error: "Invalid CSV format.",
+        error: "Input file not in CSV format.",
       });
     }
 
