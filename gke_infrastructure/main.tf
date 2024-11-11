@@ -44,4 +44,3 @@ resource "google_compute_disk" "persistent_disk" {
   zone  = "${var.region}-a"
   size  = 1
 }
-
